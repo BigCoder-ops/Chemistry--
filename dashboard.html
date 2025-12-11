@@ -1,1 +1,170 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Battery Project</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fas fa-battery-full"></i>
+            <span>Chemistry Battery Project</span>
+            <span class="deadline-badge">Deadline: Jan 23, 2024</span>
+        </div>
+        <div class="nav-user">
+            <i class="fas fa-user-circle"></i>
+            <span id="currentUser"></span>
+            <button class="btn-logout" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <div class="sidebar">
+        <a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="tasks.html"><i class="fas fa-tasks"></i> Tasks</a>
+        <a href="reports.html"><i class="fas fa-file-alt"></i> Reports</a>
+        <a href="admin.html" id="adminLink"><i class="fas fa-user-shield"></i> Admin Panel</a>
+        <div class="sidebar-footer">
+            <div class="progress-container">
+                <div class="progress-label">Project Progress</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span id="progressPercent">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="dashboard-header">
+            <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+            <div class="date-display" id="currentDate"></div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #4CAF50;">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalTasks">0</h3>
+                        <p>Total Tasks</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #2196F3;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="completedTasks">0</h3>
+                        <p>Completed</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #FF9800;">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="pendingTasks">0</h3>
+                        <p>Pending</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #9C27B0;">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="totalReports">0</h3>
+                        <p>Reports</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section-card">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="window.location.href='tasks.html'">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add New Task</span>
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='reports.html'">
+                        <i class="fas fa-file-medical"></i>
+                        <span>Create Report</span>
+                    </button>
+                    <button class="action-btn" onclick="showTasks()">
+                        <i class="fas fa-list-check"></i>
+                        <span>View Tasks</span>
+                    </button>
+                    <button class="action-btn" onclick="showCalendar()">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Project Calendar</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Upcoming Tasks -->
+            <div class="section-card">
+                <h2><i class="fas fa-calendar-day"></i> Upcoming Deadlines</h2>
+                <div class="task-list" id="upcomingTasks">
+                    <!-- Tasks will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Battery Types Progress -->
+            <div class="section-card">
+                <h2><i class="fas fa-chart-bar"></i> Battery Research Progress</h2>
+                <div class="battery-progress">
+                    <div class="battery-item">
+                        <span>Lithium Ion</span>
+                        <div class="progress-bar small">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                        <span>75%</span>
+                    </div>
+                    <div class="battery-item">
+                        <span>Lead Acid</span>
+                        <div class="progress-bar small">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                        <span>60%</span>
+                    </div>
+                    <div class="battery-item">
+                        <span>Nickel Cadmium</span>
+                        <div class="progress-bar small">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <span>45%</span>
+                    </div>
+                    <div class="battery-item">
+                        <span>Alkaline</span>
+                        <div class="progress-bar small">
+                            <div class="progress-fill" style="width: 30%"></div>
+                        </div>
+                        <span>30%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section-card">
+                <h2><i class="fas fa-history"></i> Recent Activity</h2>
+                <div class="activity-feed" id="recentActivity">
+                    <!-- Activity will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="database.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
