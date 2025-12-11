@@ -1,1 +1,75 @@
 
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "email": "admin@batteryproject.com",
+    "password": "admin123",
+    "fullName": "System Administrator",
+    "role": "admin",
+    "group": "Administration",
+    "createdAt": "2024-01-01T10:00:00.000Z",
+    "lastLogin": "2024-01-01T14:30:00.000Z",
+    "isActive": true
+  },
+  {
+    "id": 2,
+    "username": "teacher",
+    "email": "teacher@chemistry.edu",
+    "password": "teacher123",
+    "fullName": "Dr. Sarah Johnson",
+    "role": "teacher",
+    "group": "Faculty",
+    "createdAt": "2024-01-01T10:00:00.000Z",
+    "lastLogin": "2024-01-01T14:30:00.000Z",
+    "isActive": true
+  },
+  {
+    "id": 3,
+    "username": "student1",
+    "email": "alex@student.edu",
+    "password": "student123",
+    "fullName": "Alex Chen",
+    "role": "student",
+    "group": "Group A - Lithium Ion",
+    "createdAt": "2024-01-01T10:00:00.000Z",
+    "lastLogin": "2024-01-01T14:30:00.000Z",
+    "isActive": true
+  },
+  {
+    "id": 4,
+    "username": "student2",
+    "email": "maya@student.edu",
+    "password": "student123",
+    "fullName": "Maya Rodriguez",
+    "role": "student",
+    "group": "Group B - Lead Acid",
+    "createdAt": "2024-01-01T10:00:00.000Z",
+    "lastLogin": "2024-01-01T14:30:00.000Z",
+    "isActive": true
+  },
+  {
+    "id": 5,
+    "username": "student3",
+    "email": "james@student.edu",
+    "password": "student123",
+    "fullName": "James Wilson",
+    "role": "student",
+    "group": "Group C - Nickel Cadmium",
+    "createdAt": "2024-01-01T10:00:00.000Z",
+    "lastLogin": "2024-01-01T14:30:00.000Z",
+    "isActive": true
+  },
+  {
+    "id": 6,
+    "username": "student4",
+    "email": "sophia@student.edu",
+    "password": "student123",
+    "fullName": "Sophia Kim",
+    "role": "student",
+    "group": "Group D - Alkaline",
+    "createdAt": "2024-01-01T10:00:00.000Z",
+    "lastLogin": "2024-01-01T14:30:00.000Z",
+    "isActive": true
+  }
+]
