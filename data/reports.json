@@ -1,1 +1,65 @@
 
+[
+  {
+    "id": 1,
+    "title": "Weekly Progress Report - Week 1",
+    "type": "weekly",
+    "content": "This week, we focused on literature review and project planning. We identified key areas for research: lithium-ion vs lead-acid batteries comparison. Initial research indicates lithium-ion batteries have higher energy density but lead-acid is more cost-effective for certain applications.\n\nTasks completed:\n1. Project timeline established\n2. Literature review started\n3. Safety procedures documented\n\nNext week: Begin experimental setup and initial testing.",
+    "createdBy": 3,
+    "group": "Group A - Lithium Ion",
+    "experimentDate": "2024-01-05",
+    "batteryData": {
+      "voltage": 3.7,
+      "capacity": 2500,
+      "temperature": 25,
+      "efficiency": 95,
+      "notes": "Initial measurements on standard lithium-ion cell"
+    },
+    "attachments": [],
+    "status": "approved",
+    "reviewerComments": "Good progress. Make sure to include more quantitative data in next report.",
+    "reviewedBy": 2,
+    "createdAt": "2024-01-05T16:00:00.000Z",
+    "updatedAt": "2024-01-06T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "title": "Lead Acid Battery Test Results",
+    "type": "experiment",
+    "content": "Experiment conducted on 12V lead-acid battery:\n\nProcedure:\n1. Fully charged battery using standard charger\n2. Applied constant 5A load using resistor bank\n3. Measured voltage every 15 minutes\n4. Recorded until voltage dropped to 10.5V\n\nResults:\n- Initial voltage: 12.8V\n- Final voltage: 10.5V\n- Discharge time: 2 hours 15 minutes\n- Calculated capacity: 11.25Ah\n- Temperature increase: 8°C\n\nConclusion: Battery performed within expected parameters. Some voltage sag observed under load.",
+    "createdBy": 4,
+    "group": "Group B - Lead Acid",
+    "experimentDate": "2024-01-08",
+    "batteryData": {
+      "voltage": 12.8,
+      "capacity": 11.25,
+      "temperature": 33,
+      "efficiency": 85,
+      "notes": "Temperature rose significantly during discharge"
+    },
+    "attachments": [],
+    "status": "submitted",
+    "reviewerComments": "",
+    "reviewedBy": null,
+    "createdAt": "2024-01-08T14:30:00.000Z",
+    "updatedAt": "2024-01-08T14:30:00.000Z"
+  },
+  {
+    "id": 3,
+    "title": "Cost Analysis Comparison",
+    "type": "analysis",
+    "content": "Comparative analysis of battery costs:\n\n1. Lithium-ion (18650 cell):\n   - Unit cost: $5.50\n   - Energy density: 250 Wh/kg\n   - Cycle life: 500 cycles\n   - Cost per cycle: $0.011\n\n2. Lead-acid (12V 7Ah):\n   - Unit cost: $25.00\n   - Energy density: 30 Wh/kg\n   - Cycle life: 300 cycles\n   - Cost per cycle: $0.083\n\n3. Nickel-cadmium (AA size):\n   - Unit cost: $3.00\n   - Energy density: 60 Wh/kg\n   - Cycle life: 1000 cycles\n   - Cost per cycle: $0.003\n\nConclusion: Nickel-cadmium has lowest cost per cycle but environmental concerns exist.",
+    "createdBy": 5,
+    "group": "Group C - Nickel Cadmium",
+    "experimentDate": null,
+    "batteryData": {
+      "notes": "Theoretical analysis based on market prices"
+    },
+    "attachments": [],
+    "status": "draft",
+    "reviewerComments": "",
+    "reviewedBy": null,
+    "createdAt": "2024-01-09T11:00:00.000Z",
+    "updatedAt": "2024-01-09T11:00:00.000Z"
+  }
+]
