@@ -1,1 +1,135 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Battery Project - Login</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Form -->
+        <div class="form-container active" id="loginContainer">
+            <div class="form-header">
+                <h1><i class="fas fa-battery-full"></i> Chemistry Battery Project</h1>
+                <p class="subtitle">Final Project Management System</p>
+                <div class="deadline-counter">
+                    <i class="fas fa-calendar-day"></i>
+                    Project Deadline: <span id="deadlineDate">January 23, 2024</span>
+                </div>
+            </div>
+            
+            <form id="loginForm" class="auth-form">
+                <h2>Login to Your Account</h2>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="loginUsername" placeholder="Username or Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="switchToRegister">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </div>
+                <div class="form-footer">
+                    <p>Demo Accounts:</p>
+                    <ul class="demo-accounts">
+                        <li>Admin: admin / admin123</li>
+                        <li>Teacher: teacher / teacher123</li>
+                        <li>Student: student / student123</li>
+                    </ul>
+                </div>
+            </form>
+        </div>
+
+        <!-- Register Form -->
+        <div class="form-container" id="registerContainer">
+            <div class="form-header">
+                <h1><i class="fas fa-user-plus"></i> Create New Account</h1>
+                <p class="subtitle">Join the battery research project</p>
+            </div>
+            
+            <form id="registerForm" class="auth-form">
+                <h2>Register</h2>
+                <div class="form-row">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="regFullName" placeholder="Full Name" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-at"></i>
+                        <input type="text" id="regUsername" placeholder="Username" required>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <i class="fas fa-users"></i>
+                        <select id="regGroup" required>
+                            <option value="">Select Group</option>
+                            <option value="Group A">Group A - Lithium Ion</option>
+                            <option value="Group B">Group B - Lead Acid</option>
+                            <option value="Group C">Group C - Nickel Cadmium</option>
+                            <option value="Group D">Group D - Alkaline</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-user-tag"></i>
+                        <select id="regRole" required>
+                            <option value="">Select Role</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="regPassword" placeholder="Password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('regConfirmPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-user-plus"></i> Register
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="switchToLogin">
+                        <i class="fas fa-sign-in-alt"></i> Back to Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="database.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
