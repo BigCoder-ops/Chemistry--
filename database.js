@@ -539,4 +539,58 @@ class Database {
 
     // Activity methods
     getActivities(limit = 10) {
-        const sortedActivities = [...this.activities].sort((a, b)
+        const sortedActivities = [...this.activities].sort((a, b) => 
+            new Date(b.timestamp) - new Date(a.timestamp)
+        );
+        return limit ? sortedActivities.slice(0, limit) : sortedActivities;
+    }
+
+    addActivity(activityData) {
+        const newId = this.activities.length > 0 
+            ? Math.max(...this.activities.map(a => a.id)) + 1 
+            : 1;
+        
+        const newActivity = {
+            id: newId,
+            ...activityData,
+            timestamp: activityData.timestamp || new Date().toISOString()
+        };
+        
+        this.activities.unshift(newActivity);
+        this.saveToLocalStorage();
+        return newActivity;
+    }
+
+    // Statistics
+    getStatistics() {
+        const totalUsers = this.users.length;
+        const activeUsers = this.users.filter(u => u.isActive).length;
+        const totalTasks = this.tasks.length;
+        const completedTasks = this.tasks.filter(t => t.status === 'completed').length;
+        const pendingTasks = this.tasks.filter(t => t.status === 'pending').length;
+        const totalReports = this.reports.length;
+        
+        const totalProgress = this.tasks.length > 0 
+            ? Math.round(this.tasks.reduce((sum, task) => sum + (task.progress || 0), 0) / this.tasks.length)
+            : 0;
+        
+        // Calculate days until deadline
+        const deadline = new Date('2024-01-23');
+        const today = new Date();
+        const daysUntilDeadline = Math.ceil((deadline - today) / (1000 * 60 * 60 * 24));
+        
+        return {
+            totalUsers,
+            activeUsers,
+            totalTasks,
+            completedTasks,
+            pendingTasks,
+            totalReports,
+            totalProgress,
+            daysUntilDeadline: daysUntilDeadline > 0 ? daysUntilDeadline : 0
+        };
+    }
+}
+
+// Create global database instance
+const db = new Database();
