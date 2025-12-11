@@ -1,1 +1,120 @@
 
+[
+  {
+    "id": 1,
+    "title": "Research lithium-ion battery chemistry",
+    "description": "Conduct literature review on lithium-ion battery technology, focusing on cathode materials (LCO, NMC, LFP) and anode materials (graphite, silicon). Document energy density, cycle life, and safety characteristics.",
+    "assignedTo": [3],
+    "createdBy": 2,
+    "status": "in-progress",
+    "priority": "high",
+    "category": "research",
+    "batteryType": "lithium-ion",
+    "experimentPhase": "planning",
+    "dueDate": "2024-01-10",
+    "createdAt": "2024-01-01T09:00:00.000Z",
+    "progress": 75,
+    "comments": [
+      {
+        "userId": 3,
+        "text": "Found excellent review paper on NMC cathode stability",
+        "createdAt": "2024-01-02T14:30:00.000Z"
+      }
+    ],
+    "attachments": []
+  },
+  {
+    "id": 2,
+    "title": "Test battery capacity and discharge rates",
+    "description": "Perform capacity testing on different battery types using multimeter and discharge tester. Measure voltage drop over time under different load conditions.",
+    "assignedTo": [3, 4],
+    "createdBy": 2,
+    "status": "pending",
+    "priority": "medium",
+    "category": "experiment",
+    "batteryType": "lead-acid",
+    "experimentPhase": "testing",
+    "dueDate": "2024-01-15",
+    "createdAt": "2024-01-01T10:00:00.000Z",
+    "progress": 30,
+    "comments": [],
+    "attachments": []
+  },
+  {
+    "id": 3,
+    "title": "Prepare final presentation slides",
+    "description": "Create presentation slides for final project defense. Include introduction, methodology, results, analysis, and conclusion sections.",
+    "assignedTo": [5, 6],
+    "createdBy": 2,
+    "status": "pending",
+    "priority": "high",
+    "category": "presentation",
+    "experimentPhase": "conclusion",
+    "dueDate": "2024-01-22",
+    "createdAt": "2024-01-01T11:00:00.000Z",
+    "progress": 20,
+    "comments": [],
+    "attachments": []
+  },
+  {
+    "id": 4,
+    "title": "Analyze battery efficiency data",
+    "description": "Process collected data from battery tests. Calculate efficiency, internal resistance, and compare performance across battery types.",
+    "assignedTo": [4],
+    "createdBy": 2,
+    "status": "in-progress",
+    "priority": "medium",
+    "category": "analysis",
+    "batteryType": "all",
+    "experimentPhase": "analysis",
+    "dueDate": "2024-01-12",
+    "createdAt": "2024-01-02T09:00:00.000Z",
+    "progress": 50,
+    "comments": [],
+    "attachments": []
+  },
+  {
+    "id": 5,
+    "title": "Document safety procedures",
+    "description": "Create safety documentation for handling different battery types. Include procedures for charging, discharging, and emergency protocols.",
+    "assignedTo": [5],
+    "createdBy": 2,
+    "status": "completed",
+    "priority": "low",
+    "category": "documentation",
+    "dueDate": "2024-01-05",
+    "createdAt": "2024-01-02T10:00:00.000Z",
+    "completedDate": "2024-01-05T16:00:00.000Z",
+    "progress": 100,
+    "comments": [
+      {
+        "userId": 2,
+        "text": "Excellent work! Safety procedures approved.",
+        "createdAt": "2024-01-05T17:00:00.000Z"
+      }
+    ],
+    "attachments": [
+      {
+        "filename": "safety_procedures.pdf",
+        "url": "#",
+        "uploadedAt": "2024-01-05T15:30:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Compare environmental impact",
+    "description": "Research and compare environmental impact of different battery chemistries. Consider recycling potential, toxicity, and carbon footprint.",
+    "assignedTo": [6],
+    "createdBy": 2,
+    "status": "in-progress",
+    "priority": "medium",
+    "category": "research",
+    "experimentPhase": "analysis",
+    "dueDate": "2024-01-18",
+    "createdAt": "2024-01-03T09:00:00.000Z",
+    "progress": 60,
+    "comments": [],
+    "attachments": []
+  }
+]
