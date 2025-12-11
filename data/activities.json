@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "type": "user_login",
+    "title": "User logged in",
+    "description": "Dr. Sarah Johnson logged into the system",
+    "userId": 2,
+    "timestamp": "2024-01-09T09:15:00.000Z"
+  },
+  {
+    "id": 2,
+    "type": "task_created",
+    "title": "New task created",
+    "description": "Dr. Sarah Johnson created task: Compare environmental impact",
+    "userId": 2,
+    "timestamp": "2024-01-09T09:30:00.000Z"
+  },
+  {
+    "id": 3,
+    "type": "task_updated",
+    "title": "Task updated",
+    "description": "Alex Chen updated task: Research lithium-ion battery chemistry (Progress: 50% → 75%)",
+    "userId": 3,
+    "timestamp": "2024-01-09T10:45:00.000Z"
+  },
+  {
+    "id": 4,
+    "type": "report_submitted",
+    "title": "Report submitted",
+    "description": "Maya Rodriguez submitted report: Lead Acid Battery Test Results",
+    "userId": 4,
+    "timestamp": "2024-01-09T14:30:00.000Z"
+  },
+  {
+    "id": 5,
+    "type": "task_completed",
+    "title": "Task completed",
+    "description": "James Wilson completed task: Document safety procedures",
+    "userId": 5,
+    "timestamp": "2024-01-09T16:00:00.000Z"
+  },
+  {
+    "id": 6,
+    "type": "user_registered",
+    "title": "New user registered",
+    "description": "New student joined the project",
+    "userId": 6,
+    "timestamp": "2024-01-08T11:00:00.000Z"
+  },
+  {
+    "id": 7,
+    "type": "project_updated",
+    "title": "Project milestone reached",
+    "description": "Overall project progress: 45% complete",
+    "userId": 1,
+    "timestamp": "2024-01-08T17:00:00.000Z"
+  },
+  {
+    "id": 8,
+    "type": "report_reviewed",
+    "title": "Report reviewed",
+    "description": "Dr. Sarah Johnson reviewed and approved weekly progress report",
+    "userId": 2,
+    "timestamp": "2024-01-07T10:00:00.000Z"
+  }
+]
