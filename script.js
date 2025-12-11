@@ -1,4 +1,3 @@
-
 // Global variables
 let currentModal = null;
 
@@ -724,4 +723,363 @@ function showAddReportModal() {
             <button class="close-modal">&times;</button>
         </div>
         <div class="modal-body">
-            <form id="addReport
+            <form id="addReportForm">
+                <div class="input-group">
+                    <label>Report Title</label>
+                    <input type="text" id="reportTitle" required>
+                </div>
+                <div class="input-group">
+                    <label>Report Type</label>
+                    <select id="reportType" required>
+                        <option value="">Select Type</option>
+                        <option value="weekly">Weekly Progress</option>
+                        <option value="experiment">Experiment Report</option>
+                        <option value="analysis">Data Analysis</option>
+                        <option value="final">Final Report</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Content</label>
+                    <textarea id="reportContent" rows="6" required placeholder="Enter your report content here..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Group</label>
+                        <input type="text" id="reportGroup" value="${currentUser?.group || ''}" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Experiment Date</label>
+                        <input type="date" id="reportExperimentDate">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Battery Data (Optional)</label>
+                    <div class="form-row">
+                        <input type="number" placeholder="Voltage (V)" id="reportVoltage">
+                        <input type="number" placeholder="Capacity (mAh)" id="reportCapacity">
+                        <input type="number" placeholder="Temperature (°C)" id="reportTemperature">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+            <button class="btn btn-primary" onclick="saveReport()">Save Report</button>
+        </div>
+    `;
+    
+    showModal('addReportModal', modalContent);
+}
+
+function saveReport() {
+    const currentUser = auth.getCurrentUser();
+    
+    if (!currentUser) {
+        showToast('You must be logged in to create reports', 'error');
+        return;
+    }
+    
+    const reportData = {
+        title: document.getElementById('reportTitle').value,
+        type: document.getElementById('reportType').value,
+        content: document.getElementById('reportContent').value,
+        group: document.getElementById('reportGroup').value,
+        experimentDate: document.getElementById('reportExperimentDate').value || undefined,
+        batteryData: {
+            voltage: document.getElementById('reportVoltage').value || undefined,
+            capacity: document.getElementById('reportCapacity').value || undefined,
+            temperature: document.getElementById('reportTemperature').value || undefined
+        },
+        createdBy: currentUser.id
+    };
+    
+    const newReport = db.createReport(reportData);
+    
+    // Add activity
+    db.addActivity({
+        type: 'report_created',
+        title: 'New report created',
+        description: `${currentUser.fullName} created report: ${reportData.title}`,
+        userId: currentUser.id
+    });
+    
+    showToast('Report created successfully!', 'success');
+    closeModal();
+    loadReports();
+}
+
+function setupAdminPage() {
+    if (!auth.isAdmin()) {
+        window.location.href = 'dashboard.html';
+        return;
+    }
+    
+    loadAdminData();
+    setupAdminListeners();
+}
+
+function loadAdminData() {
+    loadUsersTable();
+    loadAdminStats();
+}
+
+function loadUsersTable() {
+    const users = db.getUsers();
+    const usersTable = document.getElementById('usersTable');
+    
+    if (!usersTable) return;
+    
+    usersTable.innerHTML = users.map(user => `
+        <tr>
+            <td>${user.id}</td>
+            <td>
+                <strong>${user.fullName}</strong><br>
+                <small>${user.username}</small>
+            </td>
+            <td>${user.email}</td>
+            <td>
+                <span class="badge badge-${user.role === 'admin' ? 'danger' : user.role === 'teacher' ? 'info' : 'success'}">
+                    ${user.role}
+                </span>
+            </td>
+            <td>${user.group}</td>
+            <td>${formatDate(user.createdAt)}</td>
+            <td>
+                <span class="badge ${user.isActive ? 'badge-success' : 'badge-danger'}">
+                    ${user.isActive ? 'Active' : 'Inactive'}
+                </span>
+            </td>
+            <td>
+                <button class="btn-sm btn-edit" onclick="editUser(${user.id})">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-sm ${user.isActive ? 'btn-disable' : 'btn-success'}" 
+                        onclick="toggleUserStatus(${user.id})">
+                    <i class="fas fa-${user.isActive ? 'ban' : 'check'}"></i>
+                </button>
+                ${user.role !== 'admin' ? `
+                    <button class="btn-sm btn-delete" onclick="deleteUser(${user.id})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                ` : ''}
+            </td>
+        </tr>
+    `).join('');
+}
+
+function loadAdminStats() {
+    const stats = db.getStatistics();
+    
+    document.getElementById('totalUsers').textContent = stats.totalUsers;
+    document.getElementById('activeUsers').textContent = stats.activeUsers;
+    document.getElementById('adminTasks').textContent = stats.totalTasks;
+    document.getElementById('adminReports').textContent = stats.totalReports;
+}
+
+function toggleUserStatus(userId) {
+    const user = db.getUser(userId);
+    if (!user) return;
+    
+    const newStatus = !user.isActive;
+    
+    if (confirm(`Are you sure you want to ${newStatus ? 'activate' : 'deactivate'} ${user.fullName}?`)) {
+        db.updateUser(userId, { isActive: newStatus });
+        
+        // Add activity
+        const currentUser = auth.getCurrentUser();
+        if (currentUser) {
+            db.addActivity({
+                type: 'user_status_changed',
+                title: 'User status changed',
+                description: `${currentUser.fullName} ${newStatus ? 'activated' : 'deactivated'} ${user.fullName}`,
+                userId: currentUser.id
+            });
+        }
+        
+        showToast(`User ${newStatus ? 'activated' : 'deactivated'} successfully!`, 'success');
+        loadUsersTable();
+        loadAdminStats();
+    }
+}
+
+function deleteUser(userId) {
+    const user = db.getUser(userId);
+    if (!user) return;
+    
+    if (confirm(`Are you sure you want to delete ${user.fullName}? This action cannot be undone.`)) {
+        db.deleteUser(userId);
+        
+        // Add activity
+        const currentUser = auth.getCurrentUser();
+        if (currentUser) {
+            db.addActivity({
+                type: 'user_deleted',
+                title: 'User deleted',
+                description: `${currentUser.fullName} deleted user: ${user.fullName}`,
+                userId: currentUser.id
+            });
+        }
+        
+        showToast('User deleted successfully!', 'success');
+        loadUsersTable();
+        loadAdminStats();
+    }
+}
+
+// Utility Functions
+function updateCurrentDate() {
+    const dateElement = document.getElementById('currentDate');
+    if (dateElement) {
+        const now = new Date();
+        dateElement.textContent = now.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+}
+
+function togglePassword(inputId) {
+    const input = document.getElementById(inputId);
+    const icon = input.nextElementSibling?.querySelector('i');
+    
+    if (input.type === 'password') {
+        input.type = 'text';
+        if (icon) icon.classList.replace('fa-eye', 'fa-eye-slash');
+    } else {
+        input.type = 'password';
+        if (icon) icon.classList.replace('fa-eye-slash', 'fa-eye');
+    }
+}
+
+function formatDate(dateString) {
+    if (!dateString) return 'N/A';
+    
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    });
+}
+
+function formatTime(dateString) {
+    if (!dateString) return 'N/A';
+    
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / (1000 * 60));
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    if (diffMins < 60) {
+        return `${diffMins}m ago`;
+    } else if (diffHours < 24) {
+        return `${diffHours}h ago`;
+    } else if (diffDays < 7) {
+        return `${diffDays}d ago`;
+    } else {
+        return formatDate(dateString);
+    }
+}
+
+function getPriorityClass(priority) {
+    switch(priority) {
+        case 'low': return 'info';
+        case 'medium': return 'success';
+        case 'high': return 'warning';
+        case 'urgent': return 'danger';
+        default: return 'info';
+    }
+}
+
+function getActivityIcon(type) {
+    switch(type) {
+        case 'user_login': return 'fas fa-sign-in-alt';
+        case 'user_logout': return 'fas fa-sign-out-alt';
+        case 'user_registered': return 'fas fa-user-plus';
+        case 'task_created': return 'fas fa-tasks';
+        case 'task_updated': return 'fas fa-edit';
+        case 'task_deleted': return 'fas fa-trash';
+        case 'report_created': return 'fas fa-file-alt';
+        default: return 'fas fa-bell';
+    }
+}
+
+function showModal(modalId, content) {
+    // Remove existing modal
+    const existingModal = document.getElementById('globalModal');
+    if (existingModal) existingModal.remove();
+    
+    // Create new modal
+    const modal = document.createElement('div');
+    modal.id = 'globalModal';
+    modal.className = 'modal active';
+    modal.innerHTML = `
+        <div class="modal-content">
+            ${content}
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    currentModal = modalId;
+}
+
+function closeModal() {
+    const modal = document.getElementById('globalModal');
+    if (modal) {
+        modal.remove();
+        currentModal = null;
+    }
+}
+
+function showToast(message, type = 'info') {
+    // Remove existing toasts
+    document.querySelectorAll('.toast').forEach(toast => toast.remove());
+    
+    // Create new toast
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+        <span>${message}</span>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Show toast
+    setTimeout(() => toast.classList.add('show'), 10);
+    
+    // Auto-remove after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+function logout() {
+    auth.logout();
+}
+
+// Global functions for HTML onclick handlers
+window.togglePassword = togglePassword;
+window.logout = logout;
+window.showAddTaskModal = showAddTaskModal;
+window.editTask = editTask;
+window.deleteTask = deleteTask;
+window.updateTask = updateTask;
+window.showAddReportModal = showAddReportModal;
+window.viewReport = viewReport;
+window.editReport = editReport;
+window.reviewReport = reviewReport;
+window.toggleUserStatus = toggleUserStatus;
+window.deleteUser = deleteUser;
+window.closeModal = closeModal;
+window.saveTask = saveTask;
+window.saveReport = saveReport;
+
+// Export database and auth for debugging
+window.db = db;
+window.auth = auth;
